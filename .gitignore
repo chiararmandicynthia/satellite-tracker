@@ -1,0 +1,8 @@
+# Python virtual environments
+venv/
+
+# Python cache
+__pycache__/
+
+# macOS Finder hidden files
+.DS_Store
