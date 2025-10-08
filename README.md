@@ -1,6 +1,4 @@
-# satellite-tracker
-
-🛰️ Greek CubeSats Ground-Track Viewer
+# Greek CubeSats Ground-Track Viewer
 
 This repository hosts the a satellite tracking tool developed for the Greek CubeSats IOV/IOD Programme, part of the Greek National Small Satellite Initiative under ESA’s Connectivity and Secure Communications Directorate.
 
