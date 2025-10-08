@@ -1,0 +1,510 @@
+/* ========================== RESET & BASE ========================== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Space Grotesk', monospace;
+  background: #fff;
+  color: #fff;
+  line-height: 1.4;
+}
+
+/* ========================== HEADER ========================== */
+.sv-header {
+  display: flex;
+  align-items: center;
+  background: #003247;
+  padding: 0 16px;
+  height: 60px;
+}
+.sv-logo {
+  height: 40px;
+}
+.sv-nav {
+  margin-left: 16px;
+}
+.sv-nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 24px;
+  font-size: 1rem;
+}
+.sv-nav a:hover {
+  text-decoration: underline;
+}
+.sv-selector {
+  margin-left: auto;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* ====================== MAIN LAYOUT CONTAINER ====================== */
+.sv-main-layout {
+  display: grid;
+  /* wider sidebars, but clamped so they don't get gigantic on ultrawide screens */
+  grid-template-columns: clamp(340px, 26vw, 360px) 1fr clamp(340px, 24vw, 360px);
+  gap: 24px;
+  max-width: 2000px;
+  margin: 24px auto 40px;
+  padding: 0 24px;
+}
+
+/* ====================== SIDEBAR CARDS ====================== */
+.sv-sidebar {
+  background: #003247;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.sidebar-section {
+  background: rgba(76, 175, 80, 0.3);
+  border: 2px solid #fff;
+  border-radius: 6px;
+  padding: 20px;
+}
+
+.sidebar-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.sidebar-section p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  text-align: justify;        /* ragged-right stays */
+  text-wrap: pretty;
+  max-width: 50ch;         /* was ~38ch; allow more characters per line */
+}
+
+.sidebar-section ul {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-left: 1.1rem;
+}
+
+/* ====================== OUTER CONTAINER ====================== */
+.sv-container {
+  background: #003247;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ================= SUBTITLE & TIMING ================= */
+.sv-subtitle {
+  background: rgba(76, 175, 80, 0.3);
+  border-radius: 6px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sv-subtitle h1 {
+  font-size: 1.75rem;
+  margin: 0;
+}
+.sv-times {
+  display: flex;
+  align-items: baseline;
+  gap: 32px;
+}
+.sv-times span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* ================= MISSION SELECTOR CONTAINER ================= */
+.mission-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ================= SATELLITE SELECTOR WITH REAL ARROW ================= */
+.satellite-selector-wrapper {
+  position: relative;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.satellite-selector-wrapper:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.sat-title-dropdown {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 20px 4px 8px;
+  margin: 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color-scheme: dark;
+}
+
+.sat-title-dropdown:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.sat-title-dropdown option {
+  background: #003247 !important;
+  color: #fff !important;
+  font-family: 'Space Mono', monospace;
+  padding: 8px 12px;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8em;
+  color: #fff;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ================= FORMATION TOGGLE ================= */
+.formation-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.formation-separator {
+  color: #fff;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.formation-dropdown {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.formation-dropdown:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.formation-dropdown option {
+  background: #003247 !important;
+  color: #fff !important;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ====================== MAIN LAYOUT ====================== */
+.sv-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ========================= MAP ========================= */
+.sv-map {
+  width: 100%;
+  aspect-ratio: 2/1;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #b0dbef;
+  border: 2px solid #fff; /* white contour */
+}
+#map {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* =================== SUMMARY CARDS =================== */
+.sv-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+  gap: 16px;
+}
+.card {
+  border: 2px solid #fff;
+  background: rgba(76, 175, 80, 0.3);
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+.card strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* ================= STATION CARDS ================= */
+.sv-stations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 16px;
+}
+
+.station-card {
+  border: 2px solid #fff;
+  background: rgba(76, 175, 80, 0.3);
+  padding: 16px;
+  border-radius: 6px;
+  display: flex;              
+  flex-direction: column;     
+  gap: 8px;                   
+}
+
+.station-card h2 {
+  font-size: 1.1rem;
+  margin: 0;                  
+}
+
+
+.station-card .aos.in-pass {
+  color: #fff;
+  background: rgba(231, 76, 60, 0.8);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+
+/* Make each .sat-card a vertical box */
+.sat-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: rgba(76, 175, 80, 0.3);
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 24px;
+  color: #fff;
+  text-align: left;
+}
+
+/* The title at the top */
+.sat-card h2 {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+}
+
+/* The body: patch + description side by side */
+.sat-card-body {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* Patch image fixed size */
+.sat-patch {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* Description takes remaining space */
+.sat-desc {
+  flex: 1;
+}
+.sat-desc p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.sat-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 24px;    /* <-- space between each card */
+  margin-top: 16px;
+}
+
+.sv-project h1 {
+  color: #fff;
+  margin-bottom: 16px;
+}
+.sv-project p {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.sv-project ul {
+  margin-left: 20px;
+  list-style: disc;
+}
+
+/* Neat, aligned fact grid with auto ":" after labels */
+.info-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr; /* fixed label column */
+  column-gap: 12px;
+  row-gap: 6px;
+  align-items: start;
+}
+
+.info-label {
+  text-align: right;         /* align labels to the right */
+  font-weight: 700;
+  opacity: 0.9;
+  white-space: nowrap;       /* keep labels on one line; remove if you prefer wrapping */
+}
+
+.info-label::after {
+  content: ":";              /* add the colon automatically */
+  margin-left: 6px;
+}
+
+.info-value {
+  text-align: left;          /* values to the left */
+  font-size: 0.95rem;
+}
+
+/* Justify paragraphs in the right panel */
+.sat-blurb,
+.sat-desc p,
+#satellite-info p {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;             /* nicer wrapping for long words */
+}
+
+/* Optional: tighten on small screens */
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+
+/* (optional) slightly nicer list spacing */
+.sv-main-layout > .sv-sidebar:first-child .sidebar-section ul {
+  margin-left: 1.1rem;
+  line-height: 1.6;
+}
+
+/* ========================== FOOTER LOGO BAR ========================== */
+.sv-footer {
+  background: #003247;            /* same as header background */
+  display: flex;
+  justify-content: center;       /* center all logos */
+  align-items: center;
+  gap: 48px;                      /* equal spacing between them */
+  padding: 12px 0;                /* vertical padding */
+  margin-top: 24px;               /* space above the footer */
+}
+
+.footer-logo {
+  height: 32px;                   /* consistent height */
+  opacity: 0.8;                   /* optional dimming */
+  transition: opacity .2s;
+}
+.footer-logo:hover {
+  opacity: 1;
+}
+
+
+/* ================= LEGEND ================= */
+.sv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;   /* <-- center horizontally */
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #333;
+}
+
+
+
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1200px) {
+  .sv-main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sv-main-layout {
+    margin: 16px;
+    padding: 0 16px;
+  }
+  .sv-container, .sv-sidebar {
+    padding: 16px;
+  }
+  .sv-subtitle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .sv-stations {
+    grid-template-columns: 1fr;
+  }
+  .mission-selector-container {
+    flex-wrap: wrap;
+  }
+}
+
+/* ====================== MISSION LOGOS (RIGHT PANEL) ====================== */
+.mission-logo-container {
+  display: flex;
+  justify-content: center;          /* horizontally center */
+  align-items: center;              /* vertically center within container */
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mission-logo {
+  width: 200px;                     /* force same size */
+  height: 200px;
+  object-fit: contain;              /* preserve aspect ratio */
+  display: block;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+
+.mission-logo:hover {
+  opacity: 1;
+}
