@@ -2,21 +2,20 @@
 
 🛰️ Greek CubeSats Ground-Track Viewer
 
-This repository hosts the a satellite tracking tool developed for the Greek CubeSats IOV/IOD Programme, part of the Greek National Small Satellite Initiative under ESA’s Connectivity and Secure Communications Directorate. The application provides real-time visibility of seven CubeSat missions and their ground-station passes.
+This repository hosts the a satellite tracking tool developed for the Greek CubeSats IOV/IOD Programme, part of the Greek National Small Satellite Initiative under ESA’s Connectivity and Secure Communications Directorate.
 
 🌍 Overview
 
 The tool allows users to:
 
-Visualise satellite ground tracks in real time on a world map.
+- Visualise satellite ground tracks in real time on a world map, with real-time varition of latitude and longitude.
 
-Display mission information (payloads, orbits, launch date, objectives).
+- Display mission information.
 
-Show active ground stations, their coordinates, and pass predictions (AOS/LOS, elevation, azimuth, range, velocity).
+- Show active ground stations, their location on the map, and pass predictions (AOS/LOS)
 
-Automatically update orbital data each morning from online sources.
+- Show real-time variation of elevation, azimuth, range, velocity of the satellite, with respect to the ground stations.
 
-Provide a lightweight, web-based dashboard for internal ESA and consortium use.
+The tool automatically updates orbital data each morning from CelesTrack, and also support manual TLE inputs.
 
-The system supports multiple Greek missions such as:
-DUTHSat-2, PHASMA, MICE-1, ERMIS, OptiSat, PeakSat, and Hellenic Space Dawn.
+The tool is currently being hosted at https://greek-cubesats.gr/
