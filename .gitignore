@@ -1,0 +1,12 @@
+# Ignore local logs
+*.log
+
+# Ignore automation scripts
+auto_push.sh
+
+# Ignore cron logs specifically
+tle_fetcher.cron.log
+
+# You can also ignore Python cache if it exists
+__pycache__/
+*.pyc
