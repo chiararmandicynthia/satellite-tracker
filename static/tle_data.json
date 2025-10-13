@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-10-12T06:00:14.377996",
+  "last_updated": "2025-10-13T06:02:00.549910",
   "satellites": {
     "25544": {
       "name": "MICE-1",
@@ -7,7 +7,8 @@
       "tle": "1 25544U 98067A   25284.81733646  .00012797  00000+0  23300-3 0  9995\n2 25544  51.6329  89.0398 0000798 246.3389 113.7516 15.49854968533255",
       "epoch": "2025-10-11T19:36:57.870144",
       "fetched_at": "2025-10-12T06:00:16.179376",
-      "source": "celestrak"
+      "source": "celestrak",
+      "note": "Using previous TLE (fetch/manual failed today)"
     },
     "60240": {
       "name": "LAMARR",
@@ -15,7 +16,8 @@
       "tle": "1 60240U 24128F   25284.53955535  .00003761  00000+0  29838-3 0  9999\n2 60240  61.9975  11.5907 0058431  80.9880 279.7817 15.01066862 68761",
       "epoch": "2025-10-11T12:56:57.582240",
       "fetched_at": "2025-10-12T06:00:16.648594",
-      "source": "celestrak"
+      "source": "celestrak",
+      "note": "Using previous TLE (fetch/manual failed today)"
     },
     "44714": {
       "name": "DIRAC",
@@ -23,14 +25,15 @@
       "tle": "1 44714U 19074B   25284.88883709  .00003732  00000+0  26920-3 0  9999\n2 44714  53.0515 134.6108 0001340  93.4165 266.6977 15.06411355326320",
       "epoch": "2025-10-11T21:19:55.524576",
       "fetched_at": "2025-10-12T06:00:17.292754",
-      "source": "celestrak"
+      "source": "celestrak",
+      "note": "Using previous TLE (fetch/manual failed today)"
     },
     "DUTHSat-2": {
       "name": "DUTHSat-2",
       "norad_id": null,
       "tle": "1 64532U 25135E   25267.31645216  .00019005  00000-0  92304-3 0  9992\n2 64532  97.4549  20.3503 0005468  29.9791 330.1755 15.18487677 14466",
       "epoch": "2025-09-24T07:35:41.466624",
-      "fetched_at": "2025-10-12T06:00:17.293079",
+      "fetched_at": "2025-10-13T06:03:43.047458",
       "source": "manual"
     }
   },
@@ -38,26 +41,26 @@
     {
       "norad_id": "25544",
       "name": "MICE-1",
-      "status": "success",
-      "timestamp": "2025-10-12T06:00:16.179380"
+      "status": "fallback",
+      "timestamp": "2025-10-13T06:02:31.057496"
     },
     {
       "norad_id": "60240",
       "name": "LAMARR",
-      "status": "success",
-      "timestamp": "2025-10-12T06:00:16.648599"
+      "status": "fallback",
+      "timestamp": "2025-10-13T06:03:04.358426"
     },
     {
       "norad_id": "44714",
       "name": "DIRAC",
-      "status": "success",
-      "timestamp": "2025-10-12T06:00:17.292770"
+      "status": "fallback",
+      "timestamp": "2025-10-13T06:03:43.047328"
     },
     {
       "norad_id": "manual",
       "name": "DUTHSat-2",
       "status": "success",
-      "timestamp": "2025-10-12T06:00:17.293086"
+      "timestamp": "2025-10-13T06:03:43.047460"
     }
   ]
 }
