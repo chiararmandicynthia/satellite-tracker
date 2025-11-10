@@ -235,7 +235,7 @@ const SAT_LIST = [
    manualTle: `1 64532U 25135E   25267.31645216  .00019005  00000-0  92304-3 0  9992
 2 64532  97.4549  20.3503 0005468  29.9791 330.1755 15.18487677 14466`,
    stations: [
-     { name: 'GS-DUTH',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
+     { name: 'Greece (DUTH)',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
    ],
  },
 {
@@ -266,9 +266,9 @@ const SAT_LIST = [
       { name: 'DIRAC', noradId: '44714', role: 'secondary', tle: null },
     ],
     stations: [
-      { name: 'GS-Athens',   lat: 37.98381, lng: 23.72754,  hgtKm: 0.0 },
-      { name: 'GS-Kalamata', lat: 37.0389, lng: 22.1140, hgtKm: 0.0 },
-      { name: 'GS-Crete',     lat: 35.3387, lng: 25.1442,  hgtKm: 0.076 },
+      { name: 'Athens',   lat: 37.98381, lng: 23.72754,  hgtKm: 0.0 },
+      { name: 'Kalamata', lat: 37.0389, lng: 22.1140, hgtKm: 0.0 },
+      { name: 'Crete',     lat: 35.3387, lng: 25.1442,  hgtKm: 0.076 },
     ],
   },
 {
