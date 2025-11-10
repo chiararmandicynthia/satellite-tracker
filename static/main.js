@@ -243,7 +243,7 @@ const SAT_LIST = [
     missionType: 'single',
     noradId: '25544',
     stations: [
-      { name: 'GS-DUTH', lat: 41.1419, lng: 24.8900, hgtKm: 0.076 },
+      { name: 'Greece (DUTH)', lat: 41.1419, lng: 24.8900, hgtKm: 0.076 },
       { name: 'Chile', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
       { name: 'Azerbaijan', lat: 40.467464, lng: 49.488045, hgtKm: 0.0 },
       { name: 'Sri Lanka', lat: 7.274583, lng: 80.724972, hgtKm: 0.0 },
