@@ -236,16 +236,6 @@ const SAT_LIST = [
 2 64532  97.4549  20.3503 0005468  29.9791 330.1755 15.18487677 14466`,
    stations: [
      { name: 'GS-DUTH',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
-     { name: 'Chile', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
-     { name: 'Azerbaijan', lat: 40.467464, lng: 49.488045, hgtKm: 0.0 },
-     { name: 'Sri Lanka', lat: 7.274583, lng: 80.724972, hgtKm: 0.0 },
-     { name: 'South Africa', lat: -25.860333, lng: 28.453777, hgtKm: 0.0 },
-     { name: 'Mauritius', lat: -20.5014, lng: 57.4506, hgtKm: 0.0 },
-     { name: 'Norway', lat: 78.2244, lng: 15.395169, hgtKm: 0.0 },
-     { name: 'Iceland', lat: 65.647361, lng: -20.244417, hgtKm: 0.0 },
-     { name: 'New Zealand', lat: -46.528056, lng: 168.378972, hgtKm: 0.0 },
-     { name: 'Portugal', lat: 36.997361, lng: -25.137333, hgtKm: 0.0 },
-     { name: 'United Kingdom', lat: 60.748389, lng: -0.858417, hgtKm: 0.0 },
    ],
  },
 {
@@ -254,6 +244,16 @@ const SAT_LIST = [
     noradId: '25544',
     stations: [
       { name: 'GS-DUTH', lat: 41.1419, lng: 24.8900, hgtKm: 0.076 },
+      { name: 'Chile', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
+      { name: 'Azerbaijan', lat: 40.467464, lng: 49.488045, hgtKm: 0.0 },
+      { name: 'Sri Lanka', lat: 7.274583, lng: 80.724972, hgtKm: 0.0 },
+      { name: 'South Africa', lat: -25.860333, lng: 28.453777, hgtKm: 0.0 },
+      { name: 'Mauritius', lat: -20.5014, lng: 57.4506, hgtKm: 0.0 },
+      { name: 'Norway', lat: 78.2244, lng: 15.395169, hgtKm: 0.0 },
+      { name: 'Iceland', lat: 65.647361, lng: -20.244417, hgtKm: 0.0 },
+      { name: 'New Zealand', lat: -46.528056, lng: 168.378972, hgtKm: 0.0 },
+      { name: 'Portugal', lat: 36.997361, lng: -25.137333, hgtKm: 0.0 },
+      { name: 'United Kingdom', lat: 60.748389, lng: -0.858417, hgtKm: 0.0 },
     ],
   },
   // Formation example
