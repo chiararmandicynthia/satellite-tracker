@@ -10,3 +10,4 @@ tle_fetcher.cron.log
 # You can also ignore Python cache if it exists
 __pycache__/
 *.pyc
+env/
