@@ -21,13 +21,19 @@ LOG_FILE   = SCRIPT_DIR / "tle_fetcher.cron.log"
 # ---------- Satellites to fetch (NORAD IDs must match your JS) ----------
 SATELLITES = [
     {"name": "MICE-1", "norad_id": "25544"},
-    {"name": "LAMARR", "norad_id": "60240"},
+    #{"name": "LAMARR", "norad_id": "60240"},
     {"name": "DIRAC", "norad_id": "44714"},
     {
         "name": "DUTHSat-2",
         "norad_id": None,
         "manual_tle": """1 64532U 25135E   25267.31645216  .00019005  00000-0  92304-3 0  9992
 2 64532  97.4549  20.3503 0005468  29.9791 330.1755 15.18487677 14466"""
+    },
+    {
+        "name": "LAMARR",
+        "norad_id": None,
+        "manual_tle": """1 00000U 00000A   25330.80257208  .00000000  00000-0  00000+0 0  17
+2 00000  97.4387  36.2178 0001412  60.6544 292.4303 15.17674956 04"""
     },
 ]
 
