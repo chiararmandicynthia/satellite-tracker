@@ -22,7 +22,7 @@ LOG_FILE   = SCRIPT_DIR / "tle_fetcher.cron.log"
 SATELLITES = [
     {"name": "MICE-1", "norad_id": "25544"},
     #{"name": "LAMARR", "norad_id": "60240"},
-    {"name": "DIRAC", "norad_id": "44714"},
+    #{"name": "DIRAC", "norad_id": "44714"},
     {
         "name": "DUTHSat-2",
         "norad_id": None,
@@ -35,6 +35,12 @@ SATELLITES = [
         "manual_tle": """1 00000U 00000A   25330.80257208  .00000000  00000-0  00000+0 0  17
 2 00000  97.4387  36.2178 0001412  60.6544 292.4303 15.17674956 04"""
     },
+    {
+        "name": "DIRAC",
+        "norad_id": None,
+        "manual_tle": """1 00000U 00000A   25330.80257208  .00000000  00000-0  00000+0 0  17
+2 00000  97.4387  36.2261 0001406  61.4177 291.5406 15.17677328 01"""
+    }
 ]
 
 
