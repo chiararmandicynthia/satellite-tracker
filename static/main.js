@@ -262,8 +262,16 @@ const SAT_LIST = [
     missionType: 'formation',
     currentSatellite: 'primary',
     satellites: [
-      { name: 'LAMARR', noradId: '60240', role: 'primary',   tle: null },
-      { name: 'DIRAC', noradId: '44714', role: 'secondary', tle: null },
+      { name: 'LAMARR',
+        noradId: null,
+        role: 'primary',
+        manualTle: `1 00000U 00000A   25330.80257208  .00000000  00000-0  00000+0 0  17
+2 00000  97.4387  36.2178 0001412  60.6544 292.4303 15.17674956 04`},
+      { name: 'DIRAC',
+        noradId: null,
+        role: 'secondary',
+        manualTle: `1 00000U 00000A   25330.80257208  .00000000  00000-0  00000+0 0  17
+2 00000  97.4387  36.2261 0001406  61.4177 291.5406 15.17677328 01`},
     ],
     stations: [
       { name: 'Athens',   lat: 37.98381, lng: 23.72754,  hgtKm: 0.0 },
