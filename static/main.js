@@ -241,7 +241,9 @@ const SAT_LIST = [
 {
     name: 'MICE-1',
     missionType: 'single',
-    noradId: '25544',
+    noradId: null,
+    manualTle: `1 64532U 25135E   25330.80203736  .00000000  00000-0  00000+0 0  14
+2 00000  97.4387  36.2256 0001406  61.4140 288.6247 15.17677331 09`,
     stations: [
       { name: 'Greece (DUTH)', lat: 41.1419, lng: 24.8900, hgtKm: 0.076 },
       { name: 'Chile', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
