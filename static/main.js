@@ -231,9 +231,7 @@ const SAT_LIST = [
 {
    name: 'DUTHSat-2',
    missionType: 'single',
-   noradId: null,     // no NORAD yet
-   manualTle: `1 64532U 25135E   25267.31645216  .00019005  00000-0  92304-3 0  9992
-2 64532  97.4549  20.3503 0005468  29.9791 330.1755 15.18487677 14466`,
+   noradId: '98592',     // now coming from SatNOGS via tle_data.json
    stations: [
      { name: 'Greece (DUTH)',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
    ],
@@ -241,9 +239,7 @@ const SAT_LIST = [
 {
     name: 'MICE-1',
     missionType: 'single',
-    noradId: null,
-    manualTle: `1 00000U 00000A   25332.82041667  .00000000  00000+0  00000+0 0    11
-2 00000  97.4391  44.8357 0001420  59.8600 290.1171 15.17663766    00`,
+    noradId: '98518',
     stations: [
       { name: 'Greece (DUTH)', lat: 41.1419, lng: 24.8900, hgtKm: 0.076 },
       { name: 'Chile', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
@@ -265,15 +261,13 @@ const SAT_LIST = [
     currentSatellite: 'primary',
     satellites: [
       { name: 'LAMARR',
-        noradId: null,
+        noradId: '98530',
         role: 'primary',
-        manualTle: `1 00000U 00000A   25332.82099537  .00000000  00000+0  00000+0 0    10
-2 00000  97.4388  44.8396 0001413  60.6026 292.4821 15.17675065    05`},
+      },
       { name: 'DIRAC',
-        noradId: null,
+        noradId: '98529',
         role: 'secondary',
-        manualTle: `1 00000U 00000A   25332.82112269  .00000000  00000+0  00000+0 0    18
-2 00000  97.4388  44.8398 0001407  61.3668 292.4131 15.17677438    00`},
+      },
     ],
     stations: [
       { name: 'Athens',   lat: 37.98381, lng: 23.72754,  hgtKm: 0.0 },

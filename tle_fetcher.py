@@ -22,30 +22,26 @@ LOG_FILE   = SCRIPT_DIR / "tle_fetcher.cron.log"
 SATELLITES = [
     #{"name": "MICE-1", "norad_id": "25544"},
     #{"name": "LAMARR", "norad_id": "60240"},
-    #{"name": "DIRAC", "norad_id": "44714"},
+    #{"name": "DIRAC", "norad_id": "25135C"},
     {
         "name": "DUTHSat-2",
-        "norad_id": None,
-        "manual_tle": """1 64532U 25135E   25267.31645216  .00019005  00000-0  92304-3 0  9992
-2 64532  97.4549  20.3503 0005468  29.9791 330.1755 15.18487677 14466"""
+        "norad_id": "98592",
+        "tle_source": "satnogs"
     },
     {
         "name": "LAMARR",
-        "norad_id": None,
-        "manual_tle": """1 00000U 00000A   25332.82099537  .00000000  00000+0  00000+0 0    10
-2 00000  97.4388  44.8396 0001413  60.6026 292.4821 15.17675065    05"""
+        "norad_id": "98530",
+        "tle_source": "satnogs"
     },
     {
         "name": "DIRAC",
-        "norad_id": None,
-        "manual_tle": """1 00000U 00000A   25332.82112269  .00000000  00000+0  00000+0 0    18
-2 00000  97.4388  44.8398 0001407  61.3668 292.4131 15.17677438    00"""
+        "norad_id": "98529",
+        "tle_source": "satnogs"
     },
     {
         "name": "MICE-1",
-        "norad_id": None,
-        "manual_tle": """1 00000U 00000A   25332.82041667  .00000000  00000+0  00000+0 0    11
-2 00000  97.4391  44.8357 0001420  59.8600 290.1171 15.17663766    00"""
+        "norad_id": '98518',
+        "tle_source": "satnogs"
     }
 ]
 
@@ -115,6 +111,62 @@ async def fetch_tle(session: aiohttp.ClientSession, norad_id: str):
             log(f"[{norad_id}] {name} error: {e}")
     return None
 
+async def fetch_tle_satnogs(session: aiohttp.ClientSession, norad_id: str):
+    """
+    Fetch TLE from SatNOGS DB:
+    https://db.satnogs.org/api/tle/?norad_cat_id=<NORAD>&tle_source=&sat_id=
+
+    Returns 'line1\\nline2' or None.
+    """
+    url = f"https://db.satnogs.org/api/tle/?norad_cat_id={norad_id}&tle_source=&sat_id="
+    try:
+        log(f"[{norad_id}] Trying SatNOGS DB…")
+        async with session.get(url, timeout=30) as resp:
+            if resp.status != 200:
+                log(f"[{norad_id}] SatNOGS status {resp.status}")
+                return None
+
+            data = await resp.json()
+
+        if not data:
+            log(f"[{norad_id}] SatNOGS returned empty list")
+            return None
+
+        # Use most recently updated entry just to be explicit
+        data.sort(key=lambda e: e.get("updated", ""), reverse=True)
+        entry = data[0]
+
+        l1 = entry.get("tle1")
+        l2 = entry.get("tle2")
+
+        if not (l1 and l2):
+            log(f"[{norad_id}] SatNOGS JSON missing tle1/tle2 fields")
+            return None
+
+        l1 = l1.strip()
+        l2 = l2.strip()
+        if not (l1.startswith("1 ") and l2.startswith("2 ")):
+            log(f"[{norad_id}] SatNOGS TLE lines have unexpected format")
+            return None
+
+        epoch = parse_tle_epoch(l1)
+        age_h = (datetime.now() - epoch).total_seconds() / 3600 if epoch else None
+
+        src = entry.get("tle_source", "SatNOGS")
+        if epoch:
+            log(f"[{norad_id}] OK via SatNOGS ({src}, epoch age: {age_h:.1f}h)")
+        else:
+            log(f"[{norad_id}] OK via SatNOGS ({src}, epoch parse failed)")
+
+        return f"{l1}\n{l2}"
+
+    except asyncio.TimeoutError:
+        log(f"[{norad_id}] SatNOGS timed out")
+    except Exception as e:
+        log(f"[{norad_id}] SatNOGS error: {e}")
+
+    return None
+
 async def fetch_all():
     log("==== TLE fetch start ====")
 
@@ -139,14 +191,27 @@ async def fetch_all():
             name = sat["name"]
 
             tle = None
+            source_used = None
+
             # Try fetching if NORAD ID exists
             if nid:
-                tle = await fetch_tle(session, nid)
+                mode = sat.get("tle_source", "celestrak")
+
+                if mode in ("celestrak", "both"):
+                    tle = await fetch_tle(session, nid)
+                    if tle:
+                        source_used = "celestrak"
+
+                if not tle and mode in ("satnogs", "both"):
+                    tle = await fetch_tle_satnogs(session, nid)
+                    if tle:
+                        source_used = "satnogs"
 
             # Fall back to manual TLE if provided
             if not tle and "manual_tle" in sat:
                 log(f"[{name}] Using manual TLE (no fetch)")
                 tle = sat["manual_tle"]
+                source_used = "manual"
 
             if tle:
                 l1 = tle.splitlines()[0]
@@ -158,12 +223,13 @@ async def fetch_all():
                     "tle": tle,
                     "epoch": epoch.isoformat() if epoch else None,
                     "fetched_at": datetime.now().isoformat(),
-                    "source": "manual" if "manual_tle" in sat else "celestrak"
+                    "source": source_used or ("manual" if "manual_tle" in sat else "celestrak")
                 }
                 out["fetch_log"].append({
                     "norad_id": nid or "manual",
                     "name": name,
                     "status": "success",
+                    "source": source_used or ("manual" if "manual_tle" in sat else "celestrak"),
                     "timestamp": datetime.now().isoformat()
                 })
             else:
