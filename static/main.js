@@ -233,9 +233,16 @@ const SAT_LIST = [
    missionType: 'single',
    noradId: '98592',     // now coming from SatNOGS via tle_data.json
    stations: [
-     { name: 'Greece (DUTH)',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
+    { name: 'Greece (DUTH)',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
+    { name: 'Punta Arenas', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
+    { name: 'Santiago', lat: -33.364556, lng: -70.772667, hgtKm: 0.0 },
+    { name: 'Sri Lanka', lat: 7.274222, lng: 80.724861, hgtKm: 0.0 },
+    { name: 'Azerbaijan', lat: 40.466278, lng: 49.485806, hgtKm: 0.0 },
+    { name: 'Iceland (1)', lat: 65.647361, lng: -20.246083, hgtKm: 0.0 },
+    { name: 'Iceland (2)', lat: 65.647528, lng: -20.244944, hgtKm: 0.0 },
+    { name: 'Iceland (3)', lat: 65.648306, lng: -20.238222, hgtKm: 0.0 },
    ],
- },
+  },
 {
     name: 'MICE-1',
     missionType: 'single',
