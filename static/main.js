@@ -110,7 +110,7 @@ const MISSION_INFO = {
       <li><span class="label">Dimension:</span> 3U CubeSat</li>
       <li><span class="label">Prime:</span> Aristotle University of Thessaloniki</li>
       <li><span class="label">Orbit:</span> 510 km SSO</li>
-      <li><span class="label">Launch Date:</span> February 2026</li>
+      <li><span class="label">Launch Date:</span> March 2026</li>
     </ul>
     </br>
 
@@ -139,7 +139,7 @@ const MISSION_INFO = {
       <li><span class="label">Dimension:</span> 6U CubeSat</li>
       <li><span class="label">Prime:</span> Planetek Hellas</li>
       <li><span class="label">Orbit:</span> 510 km SSO</li>
-      <li><span class="label">Launch Date:</span> February 2026</li>
+      <li><span class="label">Launch Date:</span> March 2026</li>
     </ul>
     </br>
 
@@ -168,7 +168,7 @@ const MISSION_INFO = {
       <li><span class="label">Dimension:</span> Two 8U CubeSats</li>
       <li><span class="label">Prime:</span> EMTech SPACE</li>
       <li><span class="label">Orbit:</span> 510 km SSO</li>
-      <li><span class="label">Launch Date:</span> February 2026</li>
+      <li><span class="label">Launch Date:</span> May 2026</li>
     </ul>
     </br>
 
@@ -197,7 +197,7 @@ const MISSION_INFO = {
       <li><span class="label">Dimension:</span> Two 6U CubeSats + One 8U CubeSat</li>
       <li><span class="label">Prime:</span> National and Kapodistrian University of Athens (NKUA)</li>
       <li><span class="label">Orbit:</span> 510 km SSO</li>
-      <li><span class="label">Launch Date:</span> February 2026</li>
+      <li><span class="label">Launch Date:</span> March 2026</li>
     </ul>
     </br>
 
@@ -227,13 +227,13 @@ const MISSION_LOGOS = {
 
 
 const SAT_LIST = [
-  // Single satellites
+
 {
    name: 'DUTHSat-2',
    missionType: 'single',
-   noradId: '98592',     // now coming from SatNOGS via tle_data.json
+   noradId: '98592',
    stations: [
-    { name: 'Xanthi',     lat: 41.1419, lng: 24.8900,  hgtKm: 0.076 },
+    { name: 'Xanthi', lat: 41.1419, lng: 24.8900, hgtKm: 0.076 },
     { name: 'Punta Arenas', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
     { name: 'Santiago', lat: -33.364556, lng: -70.772667, hgtKm: 0.0 },
     { name: 'Sri Lanka', lat: 7.274222, lng: 80.724861, hgtKm: 0.0 },
@@ -242,7 +242,8 @@ const SAT_LIST = [
     { name: 'Iceland (2)', lat: 65.647528, lng: -20.244944, hgtKm: 0.0 },
     { name: 'Iceland (3)', lat: 65.648306, lng: -20.238222, hgtKm: 0.0 },
    ],
-  },
+},
+
 {
     name: 'MICE-1',
     missionType: 'single',
@@ -260,59 +261,76 @@ const SAT_LIST = [
       { name: 'Portugal', lat: 36.997361, lng: -25.137333, hgtKm: 0.0 },
       { name: 'United Kingdom', lat: 60.748389, lng: -0.858417, hgtKm: 0.0 },
     ],
-  },
-  // Formation example
-  {
+},
+
+{
     name: 'PHASMA',
     missionType: 'formation',
     currentSatellite: 'primary',
     satellites: [
-      { name: 'LAMARR',
-        noradId: '98530',
-        role: 'primary',
-      },
-      { name: 'DIRAC',
-        noradId: '98529',
-        role: 'secondary',
-      },
+      { name: 'LAMARR', noradId: '98530', role: 'primary' },
+      { name: 'DIRAC',  noradId: '98529', role: 'secondary' },
     ],
     stations: [
-      { name: 'Athens',   lat: 37.98381, lng: 23.72754,  hgtKm: 0.0 },
+      { name: 'Athens', lat: 37.98381, lng: 23.72754, hgtKm: 0.0 },
       { name: 'Kalamata', lat: 37.0389, lng: 22.1140, hgtKm: 0.0 },
-      { name: 'Crete',     lat: 35.3387, lng: 25.1442,  hgtKm: 0.076 },
+      { name: 'Crete', lat: 35.3387, lng: 25.1442, hgtKm: 0.076 },
     ],
-  },
+},
 {
   name: 'PeakSat',
   missionType: 'single',
-  noradId: null,     // no NORAD yet
-  plannedLaunch: 'February 2026',   // <-- add this
-  stations: [],                     // can leave empty for now
+  noradId: '98378',   // ← replace
+  stations: [
+      { name: 'Hackerspace', lat: 38.017, lng: 23.731, hgtKm: 0.0 }
+    ],
 },
+
 {
   name: 'OptiSat',
   missionType: 'single',
-  noradId: null,     // no NORAD yet
-  plannedLaunch: 'February 2026',   // <-- add this
-  stations: [],                     // can leave empty for now
+  noradId: '98370',   // ← replace
+  stations: [
+  { name: 'Peterborough (Australia)', lat: -32.962000, lng: 138.849500, hgtKm: 0.0 },
+  { name: 'Nangetty (Australia)', lat: -29.010417, lng: 115.341667, hgtKm: 0.0 },
+  { name: 'Absheron (Azerbaijan)', lat: 40.466361, lng: 49.485806, hgtKm: 0.0 },
+  { name: 'Blönduós (Iceland)', lat: 65.647361, lng: -20.246083, hgtKm: 0.0 },
+  { name: 'Santa Maria (Azores)', lat: 36.997556, lng: -25.137306, hgtKm: 0.0 },
+  { name: 'Unst (Shetland, UK)', lat: 60.748306, lng: -0.858389, hgtKm: 0.0 },
+  { name: 'Plana (Bulgaria)', lat: 42.482944, lng: 23.445278, hgtKm: 0.0 },
+  { name: 'Punta Arenas (Chile)', lat: -53.049667, lng: -70.852972, hgtKm: 0.0 },
+  { name: 'Inuvik (Canada)', lat: 68.326139, lng: -133.608194, hgtKm: 0.0 },
+  { name: 'Blönduós (Iceland - LEGION)', lat: 65.647361, lng: -20.246083, hgtKm: 0.0 },
+  { name: 'MKII Station (Italy)', lat: 45.593333, lng: 9.362222, hgtKm: 0.0 },
+],
 },
+
+{
+  name: 'ERMIS',
+  missionType: 'formation',
+  currentSatellite: 'primary',
+  satellites: [
+    { name: 'ERMIS-1', noradId: '98369', role: 'primary' },
+    { name: 'ERMIS-2', noradId: '98368', role: 'secondary' },
+    { name: 'ERMIS-3', noradId: '98367', role: 'secondary' },
+  ],
+  stations: [
+      { name: 'Psachna', lat:  38.569552242398835, lng: 23.64832455713479, hgtKm: 0.041 },
+      { name: 'Luxembourg', lat: 49.56778, lng: 5.93417, hgtKm: 0.319 },
+      { name: 'Svalbard', lat: 78.22896804372415, lng: 15.394164524196357, hgtKm: 0.461 },
+    ],
+},
+
 {
   name: 'Hellenic Space Dawn',
   missionType: 'single',
-  noradId: null,     // no NORAD yet
-  plannedLaunch: 'February 2026',   // <-- add this
-  stations: [],                     // can leave empty for now
+  noradId: null,
+  plannedLaunch: 'May 2026',
+  stations: [],
 },
-{
-  name: 'ERMIS',
-  missionType: 'single',
-  noradId: null,     // no NORAD yet
-  plannedLaunch: 'February 2026',   // <-- add this
-  stations: [],                     // can leave empty for now
-}
-
 
 ];
+
 
 
 let currentSat = SAT_LIST[0]; // mission (single or formation)

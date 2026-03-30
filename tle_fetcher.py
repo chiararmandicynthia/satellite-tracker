@@ -18,11 +18,9 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 TLE_FILE   = SCRIPT_DIR / "static" / "tle_data.json"
 LOG_FILE   = SCRIPT_DIR / "tle_fetcher.cron.log"
 
-# ---------- Satellites to fetch (NORAD IDs must match your JS) ----------
+# ---------- Satellites ----------
 SATELLITES = [
-    #{"name": "MICE-1", "norad_id": "25544"},
-    #{"name": "LAMARR", "norad_id": "60240"},
-    #{"name": "DIRAC", "norad_id": "25135C"},
+    # ── From SatNOGS ─────────────────────────────
     {
         "name": "DUTHSat-2",
         "norad_id": "98592",
@@ -40,9 +38,46 @@ SATELLITES = [
     },
     {
         "name": "MICE-1",
-        "norad_id": '98518',
+        "norad_id": "98518",
         "tle_source": "satnogs"
-    }
+    },
+
+    # ── Manual TLE missions ──────────────────────
+    {
+        "name": "PeakSat",
+        "norad_id": "98378",
+        "tle_source": "manual",
+        "manual_tle": """1 69696U 69696    26089.46895426  .00000000  00000-0  00000-0 0 00004
+2 69696 097.4414 038.3720 0003145 156.7651 191.1423 15.18459822000011"""
+    },
+    {
+        "name": "OptiSat",
+        "norad_id": "98370",
+        "tle_source": "manual",
+        "manual_tle": """1 69696U 69696    26089.46895426  .00000000  00000-0  00000-0 0 00004
+2 69696 097.4414 038.3720 0003145 156.7651 191.1423 15.18459822000011"""
+    },
+    {
+        "name": "ERMIS-1",
+        "norad_id": "98369",
+        "tle_source": "manual",
+        "manual_tle": """1 99999U 1800100  26089.47094926  .00000000  00000-0  10400-2 0  9998
+2 99999  97.4453  38.3727 0005542 347.9980  10.7942 15.16415693    10"""
+    },
+    {
+        "name": "ERMIS-2",
+        "norad_id": "98368",
+        "tle_source": "manual",
+        "manual_tle": """1 99999U 1800100  26089.47129030  .00000000  00000-0  10517-2 0  9992
+2 99999  97.4373  38.3752 0003138 133.0545 227.6340 15.18287010    12"""
+    },
+    {
+        "name": "ERMIS-3",
+        "norad_id": "98367",
+        "tle_source": "manual",
+        "manual_tle": """1 99999U 1800100  26089.47183108  .00000000  00000-0  92415-3 0  9996
+2 99999  97.4475  38.3734 0001593 174.1121 189.5054 15.18061197    18"""
+    },
 ]
 
 
@@ -56,13 +91,13 @@ def log(msg: str) -> None:
         with open(LOG_FILE, "a", encoding="utf-8") as f:
             f.write(line + "\n")
     except Exception:
-        pass  # don't fail just because logging failed
+        pass
+
 
 # ---------- Helpers ----------
 def parse_tle_epoch(tle_line1: str):
-    """Return datetime from TLE line 1 epoch, or None."""
     try:
-        epoch_str   = tle_line1[18:32]    # YYDDD.DDDDDDDD
+        epoch_str   = tle_line1[18:32]
         year_2      = int(epoch_str[:2])
         day_of_year = float(epoch_str[2:])
         year_4 = 2000 + year_2 if year_2 < 57 else 1900 + year_2
@@ -71,11 +106,9 @@ def parse_tle_epoch(tle_line1: str):
         log(f"Error parsing epoch: {e}")
         return None
 
+
+# ---------- CelesTrak ----------
 async def fetch_tle(session: aiohttp.ClientSession, norad_id: str):
-    """
-    Try direct CelesTrak first, then AllOrigins as a CORS-friendly fallback.
-    Returns a 'line1\\nline2' string or None.
-    """
     methods = [
         ("Direct", f"https://celestrak.com/NORAD/elements/gp.php?CATNR={norad_id}&FORMAT=TLE", "text"),
         ("AllOrigins", f"https://api.allorigins.win/get?url="
@@ -86,7 +119,6 @@ async def fetch_tle(session: aiohttp.ClientSession, norad_id: str):
             log(f"[{norad_id}] Trying {name}…")
             async with session.get(url, timeout=30) as resp:
                 if resp.status != 200:
-                    log(f"[{norad_id}] {name} status {resp.status}")
                     continue
                 if kind == "json":
                     data = await resp.json()
@@ -95,89 +127,55 @@ async def fetch_tle(session: aiohttp.ClientSession, norad_id: str):
                     text = await resp.text()
 
             lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
-            # find the first L1/L2 pair
             l1 = next((ln for ln in lines if ln.startswith("1 ")), None)
             l2 = next((ln for ln in lines if ln.startswith("2 ")), None)
-            if l1 and l2 and len(l1) >= 69 and len(l2) >= 69:
-                epoch = parse_tle_epoch(l1)
-                age_h = (datetime.now() - epoch).total_seconds()/3600 if epoch else None
-                log(f"[{norad_id}] OK via {name} (epoch age: {age_h:.1f}h)" if epoch else f"[{norad_id}] OK via {name}")
+
+            if l1 and l2:
                 return f"{l1}\n{l2}"
-            else:
-                log(f"[{norad_id}] {name} returned invalid TLE format")
-        except asyncio.TimeoutError:
-            log(f"[{norad_id}] {name} timed out")
-        except Exception as e:
-            log(f"[{norad_id}] {name} error: {e}")
+        except Exception:
+            pass
     return None
 
-async def fetch_tle_satnogs(session: aiohttp.ClientSession, norad_id: str):
-    """
-    Fetch TLE from SatNOGS DB:
-    https://db.satnogs.org/api/tle/?norad_cat_id=<NORAD>&tle_source=&sat_id=
 
-    Returns 'line1\\nline2' or None.
-    """
+# ---------- SatNOGS ----------
+async def fetch_tle_satnogs(session: aiohttp.ClientSession, norad_id: str):
     url = f"https://db.satnogs.org/api/tle/?norad_cat_id={norad_id}&tle_source=&sat_id="
     try:
-        log(f"[{norad_id}] Trying SatNOGS DB…")
+        log(f"[{norad_id}] Trying SatNOGS…")
         async with session.get(url, timeout=30) as resp:
             if resp.status != 200:
-                log(f"[{norad_id}] SatNOGS status {resp.status}")
                 return None
 
             data = await resp.json()
 
         if not data:
-            log(f"[{norad_id}] SatNOGS returned empty list")
             return None
 
-        # Use most recently updated entry just to be explicit
         data.sort(key=lambda e: e.get("updated", ""), reverse=True)
         entry = data[0]
 
         l1 = entry.get("tle1")
         l2 = entry.get("tle2")
 
-        if not (l1 and l2):
-            log(f"[{norad_id}] SatNOGS JSON missing tle1/tle2 fields")
-            return None
+        if l1 and l2:
+            return f"{l1.strip()}\n{l2.strip()}"
 
-        l1 = l1.strip()
-        l2 = l2.strip()
-        if not (l1.startswith("1 ") and l2.startswith("2 ")):
-            log(f"[{norad_id}] SatNOGS TLE lines have unexpected format")
-            return None
-
-        epoch = parse_tle_epoch(l1)
-        age_h = (datetime.now() - epoch).total_seconds() / 3600 if epoch else None
-
-        src = entry.get("tle_source", "SatNOGS")
-        if epoch:
-            log(f"[{norad_id}] OK via SatNOGS ({src}, epoch age: {age_h:.1f}h)")
-        else:
-            log(f"[{norad_id}] OK via SatNOGS ({src}, epoch parse failed)")
-
-        return f"{l1}\n{l2}"
-
-    except asyncio.TimeoutError:
-        log(f"[{norad_id}] SatNOGS timed out")
     except Exception as e:
         log(f"[{norad_id}] SatNOGS error: {e}")
 
     return None
 
+
+# ---------- Main ----------
 async def fetch_all():
     log("==== TLE fetch start ====")
 
-    # Load previous file (so we can fall back if a sat fails today)
     previous = {}
     if TLE_FILE.exists():
         try:
             previous = json.loads(TLE_FILE.read_text(encoding="utf-8"))
-            log(f"Loaded existing file with {len(previous.get('satellites', {}))} sats")
-        except Exception as e:
-            log(f"Warning: failed to read existing JSON: {e}")
+        except Exception:
+            pass
 
     out = {
         "last_updated": datetime.now().isoformat(),
@@ -192,11 +190,15 @@ async def fetch_all():
 
             tle = None
             source_used = None
+            mode = sat.get("tle_source", "celestrak")
 
-            # Try fetching if NORAD ID exists
-            if nid:
-                mode = sat.get("tle_source", "celestrak")
+            # ── Manual (skip APIs) ──
+            if mode == "manual":
+                tle = sat.get("manual_tle")
+                source_used = "manual"
 
+            # ── Fetch if needed ──
+            elif nid:
                 if mode in ("celestrak", "both"):
                     tle = await fetch_tle(session, nid)
                     if tle:
@@ -207,69 +209,40 @@ async def fetch_all():
                     if tle:
                         source_used = "satnogs"
 
-            # Fall back to manual TLE if provided
-            if not tle and "manual_tle" in sat:
-                log(f"[{name}] Using manual TLE (no fetch)")
-                tle = sat["manual_tle"]
-                source_used = "manual"
+                if not tle and "manual_tle" in sat:
+                    tle = sat["manual_tle"]
+                    source_used = "manual"
 
+            # ── Store ──
             if tle:
+                key = nid or name
                 l1 = tle.splitlines()[0]
                 epoch = parse_tle_epoch(l1)
-                key = nid or name  # use NORAD ID if available, else name
+
                 out["satellites"][key] = {
                     "name": name,
                     "norad_id": nid,
                     "tle": tle,
                     "epoch": epoch.isoformat() if epoch else None,
                     "fetched_at": datetime.now().isoformat(),
-                    "source": source_used or ("manual" if "manual_tle" in sat else "celestrak")
+                    "source": source_used
                 }
-                out["fetch_log"].append({
-                    "norad_id": nid or "manual",
-                    "name": name,
-                    "status": "success",
-                    "source": source_used or ("manual" if "manual_tle" in sat else "celestrak"),
-                    "timestamp": datetime.now().isoformat()
-                })
             else:
-                # Fall back to previous if available
-                prev_sat = previous.get("satellites", {}).get(nid or name)
-                if prev_sat:
-                    out["satellites"][nid or name] = prev_sat
-                    out["satellites"][nid or name]["note"] = "Using previous TLE (fetch/manual failed today)"
-                    out["fetch_log"].append({
-                        "norad_id": nid or "manual",
-                        "name": name,
-                        "status": "fallback",
-                        "timestamp": datetime.now().isoformat()
-                    })
-                    log(f"[{name}] Using previous TLE")
-                else:
-                    out["fetch_log"].append({
-                        "norad_id": nid or "manual",
-                        "name": name,
-                        "status": "failed",
-                        "timestamp": datetime.now().isoformat()
-                    })
-                    log(f"[{name}] No TLE available (no previous, no manual)")
+                prev = previous.get("satellites", {}).get(nid or name)
+                if prev:
+                    out["satellites"][nid or name] = prev
 
-    # Write file
-    try:
-        TLE_FILE.parent.mkdir(parents=True, exist_ok=True)
-        TLE_FILE.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
-        ok = sum(1 for r in out["fetch_log"] if r["status"] in ("success", "fallback"))
-        log(f"Saved {ok}/{len(SATELLITES)} TLEs → {TLE_FILE}")
-        log("==== TLE fetch done ====")
-        return True
-    except Exception as e:
-        log(f"Failed to write {TLE_FILE}: {e}")
-        return False
+    TLE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    TLE_FILE.write_text(json.dumps(out, indent=2), encoding="utf-8")
+
+    log("==== TLE fetch done ====")
+    return True
 
 
 def main():
     success = asyncio.run(fetch_all())
     sys.exit(0 if success else 1)
+
 
 if __name__ == "__main__":
     main()
