@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# /home/ubuntu/env/bin/python /home/ubuntu/tle-tracker/tle_fetcher.py
 """
 TLE Fetcher (cron version)
 - Fetches TLEs for a fixed list of NORAD IDs
@@ -42,41 +43,30 @@ SATELLITES = [
         "tle_source": "satnogs"
     },
 
-    # ── Manual TLE missions ──────────────────────
     {
         "name": "PeakSat",
-        "norad_id": "98378",
-        "tle_source": "manual",
-        "manual_tle": """1 69696U 69696    26089.46895426  .00000000  00000-0  00000-0 0 00004
-2 69696 097.4414 038.3720 0003145 156.7651 191.1423 15.18459822000011"""
+        "norad_id": "68416",
+        "tle_source": "satnogs"
     },
     {
         "name": "OptiSat",
         "norad_id": "98370",
-        "tle_source": "manual",
-        "manual_tle": """1 69696U 69696    26089.46895426  .00000000  00000-0  00000-0 0 00004
-2 69696 097.4414 038.3720 0003145 156.7651 191.1423 15.18459822000011"""
+        "tle_source": "optisat"
     },
     {
         "name": "ERMIS-1",
-        "norad_id": "98369",
-        "tle_source": "manual",
-        "manual_tle": """1 99999U 1800100  26089.47094926  .00000000  00000-0  10400-2 0  9998
-2 99999  97.4453  38.3727 0005542 347.9980  10.7942 15.16415693    10"""
+        "norad_id": "68468",
+        "tle_source": "satnogs"
     },
     {
         "name": "ERMIS-2",
-        "norad_id": "98368",
-        "tle_source": "manual",
-        "manual_tle": """1 99999U 1800100  26089.47129030  .00000000  00000-0  10517-2 0  9992
-2 99999  97.4373  38.3752 0003138 133.0545 227.6340 15.18287010    12"""
+        "norad_id": "68420",
+        "tle_source": "satnogs"
     },
     {
         "name": "ERMIS-3",
         "norad_id": "98367",
-        "tle_source": "manual",
-        "manual_tle": """1 99999U 1800100  26089.47183108  .00000000  00000-0  92415-3 0  9996
-2 99999  97.4475  38.3734 0001593 174.1121 189.5054 15.18061197    18"""
+        "tle_source": "satnogs"
     },
 ]
 

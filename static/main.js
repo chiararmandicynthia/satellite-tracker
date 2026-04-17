@@ -280,7 +280,7 @@ const SAT_LIST = [
 {
   name: 'PeakSat',
   missionType: 'single',
-  noradId: '98378',   // ← replace
+  noradId: '68416',   // ← replace
   stations: [
       { name: 'Hackerspace', lat: 38.017, lng: 23.731, hgtKm: 0.0 }
     ],
@@ -310,8 +310,8 @@ const SAT_LIST = [
   missionType: 'formation',
   currentSatellite: 'primary',
   satellites: [
-    { name: 'ERMIS-1', noradId: '98369', role: 'primary' },
-    { name: 'ERMIS-2', noradId: '98368', role: 'secondary' },
+    { name: 'ERMIS-1', noradId: '68468', role: 'primary' },
+    { name: 'ERMIS-2', noradId: '68420', role: 'secondary' },
     { name: 'ERMIS-3', noradId: '98367', role: 'secondary' },
   ],
   stations: [
