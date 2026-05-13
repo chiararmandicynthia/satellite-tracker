@@ -68,6 +68,16 @@ SATELLITES = [
         "norad_id": "98367",
         "tle_source": "satnogs"
     },
+    {
+        "name": "Helios",
+        "norad_id": "69021",
+        "tle_source": "satnogs"
+    },
+    {
+        "name": "Selene",
+        "norad_id": "69020",
+        "tle_source": "satnogs"
+    },
 ]
 
 

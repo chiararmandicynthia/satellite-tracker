@@ -323,10 +323,24 @@ const SAT_LIST = [
 
 {
   name: 'Hellenic Space Dawn',
-  missionType: 'single',
-  noradId: null,
-  plannedLaunch: 'May 2026',
-  stations: [],
+  missionType: 'formation',
+  currentSatellite: 'primary',
+  satellites: [
+    { name: 'Helios', noradId: '69021', role: 'primary' },
+    { name: 'Selene', noradId: '69020', role: 'secondary' },
+  ],
+  stations: [
+      { name: 'Chile', lat: -53.041222, lng: -70.847111, hgtKm: 0.0 },
+      { name: 'Azerbaijan', lat: 40.467464, lng: 49.488045, hgtKm: 0.0 },
+      { name: 'Sri Lanka', lat: 7.274583, lng: 80.724972, hgtKm: 0.0 },
+      { name: 'South Africa', lat: -25.860333, lng: 28.453777, hgtKm: 0.0 },
+      { name: 'Mauritius', lat: -20.5014, lng: 57.4506, hgtKm: 0.0 },
+      { name: 'Norway', lat: 78.2244, lng: 15.395169, hgtKm: 0.0 },
+      { name: 'Iceland', lat: 65.647361, lng: -20.244417, hgtKm: 0.0 },
+      { name: 'New Zealand', lat: -46.528056, lng: 168.378972, hgtKm: 0.0 },
+      { name: 'Portugal', lat: 36.997361, lng: -25.137333, hgtKm: 0.0 },
+      { name: 'United Kingdom', lat: 60.748389, lng: -0.858417, hgtKm: 0.0 },
+    ],
 },
 
 ];
